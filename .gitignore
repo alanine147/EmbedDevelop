@@ -2,3 +2,12 @@ stm32f407zgt6/Debug/
 .metadata/
 .vscode/
 stm32f407zgt6/.settings/
+.metadata/*
+.metadata/.ide.log
+.metadata/.log
+.metadata/version.ini
+.metadata/.plugins/org.eclipse.cdt.core/stm32f407zgt6.1724572809897.pdom
+.metadata/.plugins/org.eclipse.core.resources/.projects/stm32f407zgt6/.indexes/properties.index
+.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/properties.index
+.metadata/.plugins/org.eclipse.ui.workbench/workingsets.xml
+stm32f407zgt6/.settings/language.settings.xml
