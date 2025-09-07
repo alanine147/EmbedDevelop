@@ -14,7 +14,29 @@
     "deprecated_definitions.h": "c",
     "portmacro.h": "c",
     "freertosconfig.h": "c",
-    "stm32f103xb.h": "c"
+    "stm32f103xb.h": "c",
+    "timers.h": "c",
+    "cdd_log.h": "c",
+    "stm32f1xx_hal_rtc.h": "c",
+    "stm32f1xx_hal.h": "c",
+    "stm32f1xx_hal_conf.h": "c",
+    "common.h": "c",
+    "task_background.h": "c",
+    "event_groups.h": "c"
+  },
+  "files.exclude": {
+    "stm32f407zgt6/": true,
+    "STM32F103C8T6/": false,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true
+  },
+  "search.exclude": {
+    "stm32f407zgt6/": true,
+    "STM32F103C8T6/": false,
+    "**/bower_components": true,
+    "**/*.code-search": true
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
