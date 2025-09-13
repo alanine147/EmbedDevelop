@@ -12,6 +12,7 @@
 #include "event_groups.h"
 #include "common.h"
 #include "cdd_log.h"
+#include "cdd_cli.h"
 
 /************************************************************************
  * Local Macro Definitions
@@ -107,6 +108,7 @@ void TaskForegroundEntry(void const * argument)
         if ((event & EVENT_FGD_1MS) != 0x00U)
         {
             /* 1ms runnable */
+            CDD_CLI_Mainfunction();
         }
 
         if ((event & EVENT_FGD_2MS) != 0x00U)

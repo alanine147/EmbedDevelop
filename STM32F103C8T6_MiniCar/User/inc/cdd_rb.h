@@ -25,7 +25,8 @@
  ************************************************************************/
 typedef enum CDD_RB_Buffer_EnumTag
 {
-    CDD_RB_BUFFER_LOGGER_UART,
+    CDD_RB_BUFFER_LOGGER_UART_TX,
+    CDD_RB_BUFFER_LOGGER_UART_RX,
     CDD_RB_BUFFER_NUMBER
 } CDD_RB_Buffer_Enum;
 typedef struct CDD_RB_BufferTag

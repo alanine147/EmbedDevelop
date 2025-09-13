@@ -24,8 +24,8 @@
 
 
 
-#define CDD_LOG_ENTER_CRITICAL()    taskENTER_CRITICAL()
-#define CDD_LOG_EXIT_CRITICAL()     taskEXIT_CRITICAL()
+#define CDD_LOG_ENTER_CRITICAL()    
+#define CDD_LOG_EXIT_CRITICAL()     
 /************************************************************************
  * Local Typedefs
  ************************************************************************/
@@ -48,7 +48,7 @@ static CDD_LOG dataCurrent = {0u};
  ************************************************************************/
 const CDD_LOG_Cfg cdd_log_cfg =
 {
-    CDD_RB_BUFFER_LOGGER_UART,
+    CDD_RB_BUFFER_LOGGER_UART_TX,
     CDD_LOG_UART_STRING_BUFFER_SIZE,
     cdd_log_uartStringBuffer
 };
@@ -506,7 +506,7 @@ static boolean CDD_LOG_TriggerUartTransmit(void)
             {
                 rbUartLen = 32;
             }
-            if (HAL_UART_GetState(&huart1) == HAL_UART_STATE_READY)
+            if (HAL_UART_GetState(&huart1) != HAL_UART_STATE_BUSY_TX && HAL_UART_GetState(&huart1) != HAL_UART_STATE_BUSY_TX_RX)
             {
                 if (E_OK == CDD_RB_Pop(cdd_log_cfg.rbUart, data, rbUartLen))
                 {

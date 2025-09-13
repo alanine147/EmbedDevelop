@@ -16,8 +16,8 @@
 #define CDD_RB_LOGGER_UART_BUFFER_SIZE          (CDD_RB_LOGGER_UART_ELEMENT_NUMBER * CDD_RB_LOGGER_UART_ELEMENT_SIZE)
 
 
-#define CDD_RB_ENTER_CRITICAL()     taskENTER_CRITICAL()
-#define CDD_RB_EXIT_CRITICAL()      taskEXIT_CRITICAL()
+#define CDD_RB_ENTER_CRITICAL()     taskENTER_CRITICAL_FROM_ISR()
+#define CDD_RB_EXIT_CRITICAL(x)      taskEXIT_CRITICAL_FROM_ISR(x)
 
 /************************************************************************
  * Local Typedefs
@@ -34,15 +34,24 @@
 /************************************************************************
  * Local Variable Definitions
  ************************************************************************/
-static uint8 cdd_rb_loggerBuffer[CDD_RB_LOGGER_UART_BUFFER_SIZE] = {0U};
+static uint8 cdd_rb_logger_tx_Buffer[CDD_RB_LOGGER_UART_BUFFER_SIZE] = {0U};
+static uint8 cdd_rb_logger_rx_Buffer[CDD_RB_LOGGER_UART_BUFFER_SIZE] = {0U};
 
 static CDD_RB_Buffer rb_buffers[CDD_RB_BUFFER_NUMBER] = {0U};
 
 static const CDD_RB_BufferCfg rb_bufferCfgs[CDD_RB_BUFFER_NUMBER] =
 {
     {
-        cdd_rb_loggerBuffer, 
-        cdd_rb_loggerBuffer + CDD_RB_LOGGER_UART_BUFFER_SIZE, 
+        cdd_rb_logger_tx_Buffer, 
+        cdd_rb_logger_tx_Buffer + CDD_RB_LOGGER_UART_BUFFER_SIZE, 
+        CDD_RB_LOGGER_UART_ELEMENT_SIZE, 
+        CDD_RB_LOGGER_UART_ELEMENT_NUMBER, 
+        TRUE, 
+        TRUE
+    },
+    {
+        cdd_rb_logger_rx_Buffer, 
+        cdd_rb_logger_rx_Buffer + CDD_RB_LOGGER_UART_BUFFER_SIZE, 
         CDD_RB_LOGGER_UART_ELEMENT_SIZE, 
         CDD_RB_LOGGER_UART_ELEMENT_NUMBER, 
         TRUE, 
@@ -138,13 +147,14 @@ Std_ReturnType CDD_RB_Push(uint8 id, uint8 *data, uint32 elementNumber)
     }
     else 
     {
-        CDD_RB_ENTER_CRITICAL();
+        UBaseType_t uxSavedInterruptStatus;
+        uxSavedInterruptStatus = CDD_RB_ENTER_CRITICAL();
         len = CDD_RB_PushInternal(id, data, elementNumber);
         if(elementNumber != len)
         {
             ret = E_FULL;
         }
-        CDD_RB_EXIT_CRITICAL();
+        CDD_RB_EXIT_CRITICAL(uxSavedInterruptStatus);
     }
     return ret;
 }
@@ -164,13 +174,14 @@ Std_ReturnType CDD_RB_Peek(uint8 id, uint8 *data, uint32 elementNumber)
     }
     else
     {
-        CDD_RB_ENTER_CRITICAL();
+        UBaseType_t uxSavedInterruptStatus;
+        uxSavedInterruptStatus = CDD_RB_ENTER_CRITICAL();
         len = CDD_RB_PeekInternal(id, data, elementNumber);
         if(0U == len)
         {
             ret = E_EMPTY;
         }
-        CDD_RB_EXIT_CRITICAL();
+        CDD_RB_EXIT_CRITICAL(uxSavedInterruptStatus);
     }
     return ret;
 }
@@ -190,13 +201,14 @@ Std_ReturnType CDD_RB_Pop(uint8 id, uint8 *data, uint32 elementNumber)
     }
     else
     {
-        CDD_RB_ENTER_CRITICAL();
+        UBaseType_t uxSavedInterruptStatus;
+        uxSavedInterruptStatus = CDD_RB_ENTER_CRITICAL();
         len = CDD_RB_PopInternal(id, data, elementNumber);
         if(0U == len)
         {
             ret = E_EMPTY;
         }
-        CDD_RB_EXIT_CRITICAL();
+        CDD_RB_EXIT_CRITICAL(uxSavedInterruptStatus);
     }
     return ret;
 }

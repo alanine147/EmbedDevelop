@@ -24,6 +24,7 @@
 /* USER CODE BEGIN Includes */
 #include "cdd_rb.h"
 #include "cdd_log.h"
+#include "cdd_cli.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -122,6 +123,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   CDD_RB_Init(&cdd_rb_cfg);
   sys_log("MiniCar startup, compiler at %s, %s", __DATE__, __TIME__);
+  CDD_CLI_Init(NULL_PTR);
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */

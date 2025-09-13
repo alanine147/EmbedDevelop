@@ -51,7 +51,7 @@ void Led_System_Running(void)
     {
         HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
         ledOn = FALSE;
-        sys_log("led opens");
+        // sys_log("led opens");
     }
     else
     {
